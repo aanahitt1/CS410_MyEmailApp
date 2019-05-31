@@ -15,10 +15,19 @@ public class EmailReceiver {
     //We are saving the folder and the message as variables so we can use them in any context
     Folder allMail;
     Message[] messages;
+//    EmailDataModel model;
+
+    public EmailReceiver() throws MessagingException {
+        downloadMessages();
+    }
+
+    public Message[] getMessages(){
+        return messages;
+    }
 
     private void downloadMessages () throws MessagingException {
-            Connection conn;
-            conn = Connection.getInstance();
+            com.example.myemailapp.Connection conn;
+            conn = Connection.getInstance("MyEmailAppCS410@gmail.com","Hellothere12345");
             allMail = conn.getFolder("Inbox");
             if(!allMail.isOpen()) {
                 allMail.open(Folder.READ_ONLY);
@@ -26,9 +35,7 @@ public class EmailReceiver {
             messages= allMail.getMessages();
     }
 
-    public EmailReceiver() throws MessagingException {
-        downloadMessages();
-    }
+
 
     //This method will retrieve all the addresses from the messages in the email in order
     public List<String> getMessageNames() throws Exception {
@@ -62,6 +69,19 @@ public class EmailReceiver {
         }
         return messageDates;
     }
+
+//    public List<EmailDataModel> getData() throws Exception {
+//        List<EmailDataModel> dataList = new ArrayList<>();
+//        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+//        for (Message item : messages
+//        ) {
+//            Date bah = item.getSentDate();
+//            String date = formatter.format(bah);
+//            model = new EmailDataModel(InternetAddress.toString(item.getFrom()), item.getSubject(), date);
+//            dataList.add(model);
+//        }
+//        return dataList;
+//    }
 
     //This will retrieve the message at the number specified. It should match the messages' number
     //on the lists fetched in the get() methods.
