@@ -2,7 +2,6 @@ package com.example.myemailapp;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.mail.Folder;
@@ -18,12 +17,12 @@ public class EmailReceiver {
 
     private void downloadMessages () throws MessagingException {
             Connection conn;
-            conn = Connection.getInstance();
+            conn = Connection.getInstance("MyEmailAppCS410@gmail.com", "Hellothere12345");
             allMail = conn.getFolder("Inbox");
             if(!allMail.isOpen()) {
                 allMail.open(Folder.READ_ONLY);
             }
-            messages= allMail.getMessages();
+            messages = allMail.getMessages();
     }
 
     public EmailReceiver() throws MessagingException {
@@ -33,18 +32,26 @@ public class EmailReceiver {
     //This function returns a list of the EmailDataModel of all messages in the emailreciever
     //And holds only sender's address, the date of the email, and the subject.
     public List<EmailDataModel> getMessageList() throws MessagingException {
-        List<EmailDataModel> messageData = new ArrayList<>();
+        List<EmailDataModel> emailDataModels = new ArrayList<>();
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-        for (Message item: messages
-             ) {
-            String sender = InternetAddress.toString(item.getFrom());
-            String subject = item.getSubject();
-            String date = formatter.format(item.getSentDate());
-            messageData.add(new EmailDataModel(sender, subject, date));
-        }
-        return messageData;
-    }
+        for (Message message : messages) {
+            String sender = InternetAddress.toString(message.getFrom());
+            String subject = message.getSubject();
+            String date = formatter.format(message.getSentDate());
+            String body;
 
+//            try {
+//                body = (String) message.getContent();
+//            } catch (IOException e) {
+//                body = e.getMessage();
+//                e.printStackTrace();
+//            }
+
+//            emailDataModels.add(new EmailDataModel(sender, subject, date, body));
+            emailDataModels.add(new EmailDataModel(sender, subject, date));
+        }
+        return emailDataModels;
+    }
 
     //This will retrieve the message at the number specified. It should match the messages' number
     //on the lists fetched in the get() methods.

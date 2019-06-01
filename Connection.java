@@ -19,11 +19,12 @@ public class Connection {
         StrictMode.setThreadPolicy(policy);
 
         Properties props = System.getProperties();
-            props.setProperty("mail.store.protocol", "imaps");
-            Session session = Session.getDefaultInstance(props);
+        props.setProperty("mail.store.protocol", "imaps");
+        Session session = Session.getDefaultInstance(props);
 
-            store = session.getStore("imaps");
-            store.connect("imap.gmail.com", username, password);
+        store = session.getStore("imaps");
+        store.connect("imap.gmail.com", username, password);
+
     }
 
     public static Connection getInstance(String username, String password) throws MessagingException {

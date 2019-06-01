@@ -1,37 +1,25 @@
 package com.example.myemailapp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.myemailapp.R;
-import com.example.myemailapp.EmailViewHolder;
-
-import java.text.SimpleDateFormat;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
+import java.util.List;
 
 
 public class EmailAdapter extends RecyclerView.Adapter<EmailViewHolder>{
 
-    private Message[] messages;
-
-//    private List<EmailDataModel> emailDataModelList;
-
-    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+    private List<EmailDataModel> emailDataModelList;
+    private Context details;
 
 
-    public EmailAdapter(Message[] messages) {
-        this.messages = messages;
+    public EmailAdapter(Context details, List<EmailDataModel> emailDataModelList) {
+        this.emailDataModelList = emailDataModelList;
+        this.details = details;
     }
-
-
-//    //if change data structure from EmailReceiver class
-//    public EmailAdapter(List<EmailDataModel> emailDataModelList) {
-//        this.emailDataModelList = emailDataModelList;
-//    }
 
 
     @Override
@@ -43,29 +31,28 @@ public class EmailAdapter extends RecyclerView.Adapter<EmailViewHolder>{
 
     @Override
     public void onBindViewHolder(final EmailViewHolder holder, int position) {
-        try {
-            holder.icon.setText(messages[position].getFrom()[0].toString().substring(0,1));
-            holder.emailSender.setText(messages[position].getFrom()[0].toString());
-            holder.emailSubject.setText(messages[position].getSubject());
-            holder.emailDate.setText(formatter.format(messages[position].getSentDate()));
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
+        holder.getIcon().setText(emailDataModelList.get(position).getEmailSender().substring(0,1));
+        holder.getEmailSender().setText(emailDataModelList.get(position).getEmailSender());
+        holder.getEmailSubject().setText(emailDataModelList.get(position).getEmailSubject());
+        holder.getEmailDate().setText(emailDataModelList.get(position).getEmailDate());
 
-//        holder.icon.setText(emailDataModelList.get(position).getEmailSender().substring(0,1));
-//        holder.emailSender.setText(emailDataModelList.get(position).getEmailSender());
-//        holder.emailSubject.setText(emailDataModelList.get(position).getEmailSubject());
-//        holder.emailDate.setText(emailDataModelList.get(position).getEmailDate());
 
+        holder.getEmailLayout().setOnClickListener(view -> {
+            Intent intent = new Intent(details, ReadEmailScreen.class);
+            intent.putExtra("sender", holder.getEmailSender().getText().toString());
+            intent.putExtra("subject", holder.getEmailSubject().getText().toString());
+            intent.putExtra("date", holder.getEmailDate().getText().toString());
+            intent.putExtra("icon", holder.getIcon().getText().toString());
+//            intent.putExtra("content",holder.getEmailBody().getText().toString());
+            details.startActivity(intent);
+        });
     }
 
     @Override
     public int getItemCount() {
-        return messages.length;
-//        return emailDataModelList.size();
+        return emailDataModelList.size();
     }
 }
-
 
 
 
