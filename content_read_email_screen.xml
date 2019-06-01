@@ -7,7 +7,7 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ReadEmailScreen"
-    android:parentActivityName = ".EmailListScreen"
+    android:parentActivityName = ".EmailList"
     tools:showIn="@layout/activity_read_email_screen">
 
     <TextView
