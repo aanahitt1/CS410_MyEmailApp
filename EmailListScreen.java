@@ -3,9 +3,6 @@ package com.example.myemailapp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +14,7 @@ import java.util.List;
 
 import javax.mail.BodyPart;
 import javax.mail.Message;
-import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMultipart;
 
 
@@ -54,10 +51,11 @@ public class EmailListScreen extends RecyclerView.Adapter<EmailViewHolder>{
         emailViewHolder.getEmailLayout().setOnClickListener(view -> {
             Intent intent = new Intent(context, ReadEmailScreen.class);
             Bundle b = new Bundle();
-//            try{
-//                Message received = emailRec.retrieveMessage(emailViewHolder.getEmailSubject().getText().toString());
-//                b.putString("sender", InternetAddress.toString(received.getFrom()));
-//                b.putString("subject", received.getSubject();
+            try{
+                Message received = emailRec.retrieveMessage(emailViewHolder.getEmailSubject().getText().toString());
+                b.putString("sender", InternetAddress.toString(received.getFrom()));
+                b.putString("subject", received.getSubject());
+
 //                Object content = received.getContent();
 //                if (content instanceof MimeMultipart) {
 //                    MimeMultipart multipart = (MimeMultipart) content;
@@ -67,15 +65,12 @@ public class EmailListScreen extends RecyclerView.Adapter<EmailViewHolder>{
 //                    }
 //                }
 //                if (content != null) {
-//                    b.putString(content.toString());
+//                    b.putString("content", content.toString());
 //                }
-//            } catch (Exception e) {}
 
-//            b.putString("sender", emailViewHolder.getEmailSender().getText().toString());
-//            b.putString("subject", emailViewHolder.getEmailSubject().getText().toString());
-//            b.putString("date", emailViewHolder.getEmailDate().getText().toString());
-//            b.putString("icon", emailViewHolder.getIcon().getText().toString());
-            b.putString("content", "Bah");
+
+            } catch (Exception e) {}
+
             intent.putExtras(b);
             context.startActivity(intent);
         });

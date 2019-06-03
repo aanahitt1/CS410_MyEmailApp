@@ -18,8 +18,6 @@ public class EmailList_MainActivity extends AppCompatActivity {
     EmailReceiver emailRec;
     List<EmailDataModel> emailDataModelList;
 
-
-    //    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

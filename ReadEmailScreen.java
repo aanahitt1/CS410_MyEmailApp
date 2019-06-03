@@ -10,14 +10,7 @@ import javax.mail.Message;
 
 public class ReadEmailScreen extends AppCompatActivity {
 
-//    private Message reading;
-//
-//    public ReadEmailScreen(Message given) {
-//        reading = given;
-//    }
-
     public ReadEmailScreen() {
-
     }
 
     @Override
@@ -35,26 +28,14 @@ public class ReadEmailScreen extends AppCompatActivity {
         String messageContent;
         String messageSubject;
 
-
         Bundle bundle = getIntent().getExtras();
-
-
-
-//        System.out.println("### bundle size = " + bundle.size());
-//        System.out.println("### bundle contains subject key: " + bundle.containsKey("subject"));
-//        System.out.println("### bundle contains sender key: " + bundle.containsKey("sender"));
-//        System.out.println("### bundle contains content key: " + bundle.containsKey("content"));
-//        System.out.println("### bundle contains icon key: " + bundle.containsKey("icon"));
-//        System.out.println("### bundle contains date key: " + bundle.containsKey("date"));
-
-
 
         try {
             if(bundle != null) {
                 messageSubject = bundle.getString("subject", "missing subject!");
                 subject.setText(messageSubject);
                 address.setText(bundle.getString("sender", "missing sender!"));
-                //content.setText(bundle.getString("content"));
+                content.setText(bundle.getString("content","missing content"));
             } else {
                 messageSubject = "Bundle is null";
                 subject.setText(messageSubject);
