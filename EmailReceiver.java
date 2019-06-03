@@ -47,14 +47,14 @@ public class EmailReceiver {
 
     //This will retrieve the message at the number specified. It should match the messages' number
     //on the lists fetched in the get() methods.
-//    public Message retrieveMessage(String subject) throws MessagingException {
-//        Message found = null;
-//        for(int i = 0; i < messages.length; i++) {
-//            if(messages[i].getSubject().equals(subject)) {
-//                found = messages[i];
-//            }
-//        }
-//        return found;
-//    }
+    public Message retrieveMessage(String subject) throws MessagingException {
+        Message found = null;
+        for(int i = 0; i < messages.length; i++) {
+            if(messages[i].getSubject().equals(subject)) {
+                found = messages[i];
+            }
+        }
+        return found;
+    }
 
 }
